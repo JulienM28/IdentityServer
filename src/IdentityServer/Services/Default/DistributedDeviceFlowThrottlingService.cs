@@ -72,7 +72,7 @@ namespace Duende.IdentityServer.Services
             {
                 var client = await _clientStore.FindEnabledClientByIdAsync(details.ClientId);
                 var interval = client?.PollingInterval ?? _options.DeviceFlow.Interval;
-                if (_clock.UtcNow < lastSeen.AddSeconds(interval))
+                if (_clock.UtcNow.UtcDateTime < lastSeen.AddSeconds(interval))
                 {
                     await _cache.SetStringAsync(key, _clock.UtcNow.ToString("O"), options);
                     return true;
